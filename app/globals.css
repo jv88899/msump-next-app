@@ -12,7 +12,11 @@
 
 body {
   background: #ebf0fa;
-  @apply text-gray-500 m-8;
+  @apply text-gray-500;
+}
+
+h1 {
+  @apply text-primary font-semibold text-4xl;
 }
 
 button {
@@ -29,4 +33,10 @@ button:hover {
 }
 .btn-secondary {
   @apply bg-gray-200 text-gray-900;
+}
+.btn-outline {
+  @apply border-2 border-primary rounded font-semibold text-primary;
+}
+.btn-outline:hover {
+  @apply bg-primary text-background;
 }
