@@ -14,10 +14,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={rubik.className}>
-        <header className="h-12">
-          <p>MSUMP</p>
-        </header>
-        <div className="w-full">{children}</div>
+        <div className="w-full h-screen">
+          <header className="p-2">
+            <p className="bg-primary h-12 w-12 rounded-full"></p>
+          </header>
+          <div className="w-full">{children}</div>
+        </div>
       </body>
     </html>
   );

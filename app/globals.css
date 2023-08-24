@@ -23,7 +23,7 @@ button {
   @apply px-3 py-2 
     rounded-sm 
     flex justify-between items-center gap-2
-    text-sm;
+    text-sm font-semibold;
 }
 button:hover {
   @apply bg-opacity-90;
@@ -39,4 +39,7 @@ button:hover {
 }
 .btn-outline:hover {
   @apply bg-primary text-background;
+}
+.btn-outline:active {
+  @apply bg-background;
 }
