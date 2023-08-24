@@ -23,7 +23,7 @@ button {
   @apply px-3 py-2 
     rounded-sm 
     flex justify-between items-center gap-2
-    text-sm font-semibold;
+    text-sm;
 }
 button:hover {
   @apply bg-opacity-90;
@@ -35,11 +35,19 @@ button:hover {
   @apply bg-gray-200 text-gray-900;
 }
 .btn-outline {
-  @apply border-2 border-primary rounded font-semibold text-primary;
+  @apply border-2 border-primary rounded  text-primary;
 }
 .btn-outline:hover {
   @apply bg-primary text-background;
 }
 .btn-outline:active {
   @apply bg-background;
+}
+
+input {
+  @apply border-[1px] border-primary rounded-md p-2;
+}
+
+input::placeholder {
+  @apply text-primary;
 }
