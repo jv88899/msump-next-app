@@ -27,6 +27,9 @@ export default function Signup() {
           </Link>
         </p>
       </div>
+      <Link href="/" className="w-full text-center block mt-64">
+        Home
+      </Link>
     </div>
   );
 }
