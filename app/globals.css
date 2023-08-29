@@ -51,3 +51,12 @@ input {
 input::placeholder {
   @apply text-primary;
 }
+
+.auth-layout {
+  @apply w-[95%] h-[97%]
+  bg-whiteBackground 
+  border-primary border-2 rounded-md
+  mx-auto
+  pt-12
+  px-6;
+}
