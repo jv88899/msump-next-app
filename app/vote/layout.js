@@ -3,7 +3,7 @@ import "../globals.css";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function AuthLayout({ children }) {
+export default async function VoteLayout({ children }) {
   const supabase = createServerComponentClient({ cookies });
   const { data } = await supabase.auth.getSession();
 
@@ -11,9 +11,7 @@ export default async function AuthLayout({ children }) {
     redirect("/signin");
   }
 
-  return (
-    <div className="h-screen w-screen flex justify-center items-center">
-      {children}
-    </div>
-  );
+  console.log("data.session.user", data.session.user);
+
+  return <div>{children}</div>;
 }

@@ -60,3 +60,7 @@ input::placeholder {
   pt-12
   px-6;
 }
+
+.swipe {
+  position: absolute;
+}
