@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 export default async function Vote() {
   const supabase = createServerComponentClient({ cookies });
-  const { data, error } = await supabase.from("random_albums").select();
+
   const { data: userData } = await supabase.auth.getSession();
   let user = null;
 
@@ -15,7 +15,7 @@ export default async function Vote() {
   return (
     <div>
       {user.email}
-      <Albums albums={data} user={user} />
+      <Albums user={user} />
     </div>
   );
 }

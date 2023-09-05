@@ -1,6 +1,13 @@
-import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa6";
+import React from "react";
+import {
+  FaRegThumbsUp,
+  FaRegThumbsDown,
+  FaUpLong,
+  FaDownLong,
+  FaUpDown,
+} from "react-icons/fa6";
 
-export default function Album({ album }) {
+export default function Album({ album, upvotes, downvotes }) {
   const { album_image, title, artist, release_year } = album;
 
   return (
@@ -10,7 +17,7 @@ export default function Album({ album }) {
         <div>
           <h2 className="text-lg w-full text-center font-bold">{title}</h2>
           <h3 className="text-sm w-full text-center mb-2">{artist}</h3>
-          <div className="w-full text-xs flex justify-center">
+          <div className="w-full text-xs flex justify-center mb-2">
             <span>Genre</span>
             <span className="px-1">|</span>
             <span>{release_year}</span>
@@ -18,7 +25,20 @@ export default function Album({ album }) {
             <span>Ranking</span>
           </div>
         </div>
-        <div className="mt-16 flex w-3/4 justify-between">
+        <div className="w-full text-xs flex justify-center">
+          <span className="flex">
+            <FaUpLong /> {upvotes}
+          </span>
+          <span className="px-1">&#183;</span>
+          <span className="flex">
+            <FaDownLong /> {downvotes > 0 ? downvotes : 0}
+          </span>
+          <span className="px-1">&#183;</span>
+          <span className="flex">
+            <FaUpDown /> {0}
+          </span>
+        </div>
+        <div className="mt-12 flex w-3/4 justify-between">
           <FaRegThumbsDown className="w-12 h-12" />
           <FaRegThumbsUp className="w-12 h-12" />
         </div>

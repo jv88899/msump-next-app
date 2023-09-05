@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import "../globals.css";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import Providers from "@/app/providers";
 
 export default async function VoteLayout({ children }) {
   const supabase = createServerComponentClient({ cookies });
@@ -13,5 +14,5 @@ export default async function VoteLayout({ children }) {
 
   console.log("data.session.user", data.session.user);
 
-  return <div>{children}</div>;
+  return <Providers>{children}</Providers>;
 }
