@@ -7,7 +7,7 @@ import {
   FaUpDown,
 } from "react-icons/fa6";
 
-export default function Album({ album, upvotes, downvotes }) {
+export default function Album({ album, upvotes, downvotes, handleUpvote, handleDownvote }) {
   const { album_image, title, artist, release_year } = album;
 
   return (
@@ -39,8 +39,8 @@ export default function Album({ album, upvotes, downvotes }) {
           </span>
         </div>
         <div className="mt-12 flex w-3/4 justify-between">
-          <FaRegThumbsDown className="w-12 h-12" />
-          <FaRegThumbsUp className="w-12 h-12" />
+          <FaRegThumbsDown className="w-12 h-12" onClick={handleDownvote} />
+          <FaRegThumbsUp className="w-12 h-12" onClick={handleUpvote} />
         </div>
       </div>
     </div>

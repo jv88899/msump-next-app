@@ -6,6 +6,15 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import Link from "next/link";
 import React from "react";
+import { toast } from "react-hot-toast";
+
+function successfulUpvote() {
+  return toast.success("Upvote Successful");
+}
+
+function successfulDownvote() {
+  return toast.success("Downvote Successful");
+}
 
 export default function Albums({ user }) {
   const [albums, setAlbums] = React.useState([]);
@@ -64,17 +73,76 @@ export default function Albums({ user }) {
       setDownvotes(data[3].length);
 
       const numberOfVotesAvailable = 5;
-      const votesUsedToday = data[5]?.filter(
+      const votesUsedToday = data[4]?.filter(
         (vote) =>
           dayjs(new Date(vote.created_at)).format("YYYY/MM/DD") ===
           dayjs().format("YYYY/MM/DD")
       );
+
+      console.log(votesUsedToday);
 
       setAllVotesUsed(
         numberOfVotesAvailable <= votesUsedToday?.length ? true : false
       );
     }
   }, [status, data, albums, albumIndex, currentAlbum, user]);
+
+  function handleUpdateCurrentAlbum() {
+    if (albumIndex < numberOfAlbums - 1) {
+      setAlbumIndex((prevCount) => prevCount + 1);
+      setCurrentAlbum(albums[albumIndex]);
+    } else if (albumIndex === numberOfAlbums - 1) {
+      setAllVotesUsed(true);
+    }
+  }
+
+  async function upvote() {
+    try {
+      const { data: upvote, error: upvoteError } = await supabase
+        .from("votes")
+        .insert([
+          {
+            user_id: user.id,
+            album_id: currentAlbum.id,
+            upvote: true,
+            downvote: false,
+          },
+        ]);
+
+      successfulUpvote();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async function downvote() {
+    try {
+      const { data: downvote, error: downvoteError } = await supabase
+        .from("votes")
+        .insert([
+          {
+            user_id: user.id,
+            album_id: currentAlbum.id,
+            upvote: false,
+            downvote: true,
+          },
+        ]);
+
+      successfulDownvote();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async function handleUpvote() {
+    await upvote();
+    handleUpdateCurrentAlbum();
+  }
+
+  async function handleDownvote() {
+    await downvote();
+    handleUpdateCurrentAlbum();
+  }
 
   return (
     <>
@@ -93,6 +161,8 @@ export default function Albums({ user }) {
                       album={currentAlbum}
                       upvotes={upvotes}
                       downvotes={downvotes.count}
+                      handleUpvote={handleUpvote}
+                      handleDownvote={handleDownvote}
                     />
                   )}
                 </div>
