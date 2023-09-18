@@ -8,6 +8,10 @@ export default async function Vote() {
   const { data: userData } = await supabase.auth.getSession();
   let user = null;
 
+  const { data: albumsData, error: albumsDataFetchError } = await supabase
+    .from("random_albums")
+    .select();
+
   if (userData?.session) {
     user = userData.session.user;
   }
@@ -15,7 +19,7 @@ export default async function Vote() {
   return (
     <div>
       {user.email}
-      <Albums user={user} />
+      <Albums user={user} albumsData={albumsData} />
     </div>
   );
 }

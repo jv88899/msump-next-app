@@ -16,8 +16,8 @@ function successfulDownvote() {
   return toast.success("Downvote Successful");
 }
 
-export default function Albums({ user }) {
-  const [albums, setAlbums] = React.useState([]);
+export default function Albums({ user, albumsData }) {
+  const [albums, setAlbums] = React.useState(albumsData);
   const [albumIndex, setAlbumIndex] = React.useState(0);
   const [currentAlbum, setCurrentAlbum] = React.useState(null);
   const [numberOfAlbums, setNumberOfAlbums] = React.useState(0);
@@ -31,13 +31,13 @@ export default function Albums({ user }) {
   const { status, data, error, isLoading } = useQuery(
     ["albumInformation", albumIndex],
     async function getAllAlbumInformation() {
-      const { data: allAlbums, error } = await supabase
-        .from("random_albums")
-        .select();
+      // const { data: allAlbums, error } = await supabase
+      //   .from("random_albums")
+      //   .select();
 
-      console.log("allAlbums", allAlbums);
+      // console.log("allAlbums", allAlbums);
 
-      const activeAlbum = allAlbums[albumIndex];
+      const activeAlbum = albums[albumIndex];
       const activeAlbumId = activeAlbum.id;
 
       const { data: upvotes, error: upvotesError } = await supabase
@@ -57,7 +57,9 @@ export default function Albums({ user }) {
       const { data: activeUserVotes, error: activeUserVotesError } =
         await supabase.from("votes").select().eq("user_id", activeUserId);
 
-      return [allAlbums, activeAlbum, upvotes, downvotes, activeUserVotes];
+      // return [allAlbums, activeAlbum, upvotes, downvotes, activeUserVotes];
+
+      return [upvotes, downvotes, activeUserVotes];
     },
     { refetchOnWindowFocus: false }
   );
@@ -66,14 +68,15 @@ export default function Albums({ user }) {
   React.useEffect(() => {
     if (status === "loading") return;
     if (status === "success") {
-      setAlbums(data[0]);
-      setNumberOfAlbums(data[0].length);
-      setCurrentAlbum(data[1]);
-      setUpvotes(data[2].length);
-      setDownvotes(data[3].length);
+      // setAlbums(data[0]);
+      setNumberOfAlbums(albums.length);
+      setCurrentAlbum(albums[albumIndex]);
+      setUpvotes(data[0].length);
+      setDownvotes(data[1].length);
+      console.log(data);
 
-      const numberOfVotesAvailable = 5;
-      const votesUsedToday = data[4]?.filter(
+      const numberOfVotesAvailable = 3;
+      const votesUsedToday = data[2]?.filter(
         (vote) =>
           dayjs(new Date(vote.created_at)).format("YYYY/MM/DD") ===
           dayjs().format("YYYY/MM/DD")
