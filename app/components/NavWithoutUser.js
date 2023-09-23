@@ -36,9 +36,7 @@ export default function NavWithoutUser() {
             className={`flex flex-col items-end w-11/12 mx-auto z-20 absolute`}
           >
             <div className={`${caveat.className} pl-6 pt-8 flex`}>
-              <MotionLink
-                href="/"
-              >
+              <MotionLink href="/">
                 <span className="text-xl uppercase flex bg-white border border-slate-700 w-28 px-2 py-1 items-center justify-center rounded-3xl">
                   <HouseLine size={24} className="mr-2" />
                   Home
@@ -69,7 +67,7 @@ export default function NavWithoutUser() {
             </div>
             <div className={`${caveat.className} pt-4 flex`}>
               <button
-                className="text-xl uppercase flex bg-slate-700 border-2 border-white text-white w-64 px-2 py-1 items-center justify-center rounded-3xl"
+                className="text-xl bg-primary uppercase flex border-2 border-white text-white w-64 px-2 py-1 items-center justify-center rounded-3xl"
                 onClick={() => setMenuVisible(false)}
                 variants={variants}
               >
@@ -79,7 +77,7 @@ export default function NavWithoutUser() {
             </div>
           </div>
         ) : (
-          <div className="bg-slate-700 w-16 rounded-3xl py-1 flex justify-center absolute top-4 right-4">
+          <div className="bg-primary w-16 rounded-3xl py-1 flex justify-center absolute top-4 right-4">
             <Hamburger
               size={36}
               className="text-white"

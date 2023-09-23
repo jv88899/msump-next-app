@@ -36,7 +36,7 @@ export default function NavWithUser() {
         {menuVisible ? null : (
           <motion.button
             variants={variants}
-            className="bg-slate-700 w-16 rounded-3xl py-1 flex justify-center absolute top-4 right-4"
+            className=" bg-primary w-16 rounded-3xl py-1 flex justify-center absolute top-4 right-4"
             onClick={() => setMenuVisible(true)}
           >
             <Hamburger size={36} />
@@ -90,7 +90,7 @@ export default function NavWithUser() {
           </div>
           <div className={`${caveat.className} pt-4 flex`}>
             <button
-              className="text-xl uppercase flex bg-slate-700 border-2 border-white text-white w-64 px-2 py-1 items-center justify-center rounded-3xl"
+              className="text-xl bg-primary uppercase flex border-2 border-white text-white w-64 px-2 py-1 items-center justify-center rounded-3xl"
               onClick={() => setMenuVisible(false)}
               variants={variants}
             >
