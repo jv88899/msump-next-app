@@ -31,12 +31,6 @@ export default function Albums({ user }) {
   const { status, data, error, isLoading } = useQuery(
     ["albumInformation", albumIndex],
     async function getAllAlbumInformation() {
-      // const { data: allAlbums, error } = await supabase
-      //   .from("random_albums")
-      //   .select();
-
-      // console.log("allAlbums", allAlbums);
-
       const { data: albumsData, error: albumsDataError } = await supabase
         .from("profiles")
         .select("current_album_set")
@@ -44,7 +38,6 @@ export default function Albums({ user }) {
 
       const activeAlbum = albumsData[0]["current_album_set"][albumIndex];
       const activeAlbumId = activeAlbum.id;
-      console.log("activeAlbum", albumsData[0]["current_album_set"]);
 
       const { data: upvotes, error: upvotesError } = await supabase
         .from("votes")
@@ -63,8 +56,6 @@ export default function Albums({ user }) {
       const { data: activeUserVotes, error: activeUserVotesError } =
         await supabase.from("votes").select().eq("user_id", activeUserId);
 
-      // return [allAlbums, activeAlbum, upvotes, downvotes, activeUserVotes];
-
       return [albumsData, upvotes, downvotes, activeUserVotes];
     },
     { refetchOnWindowFocus: false }
@@ -74,13 +65,11 @@ export default function Albums({ user }) {
   React.useEffect(() => {
     if (status === "loading") return;
     if (status === "success") {
-      console.log(data);
       setAlbums(data[0][0]["current_album_set"]);
       setNumberOfAlbums(albums.length);
       setCurrentAlbum(albums[albumIndex]);
       setUpvotes(data[1]?.length || 0);
       setDownvotes(data[2]?.length || 0);
-      console.log(data);
 
       const numberOfVotesAvailable = 300;
       const votesUsedToday = data[2]?.filter(
@@ -88,10 +77,6 @@ export default function Albums({ user }) {
           dayjs(new Date(vote.created_at)).format("YYYY/MM/DD") ===
           dayjs().format("YYYY/MM/DD")
       );
-
-      console.log(votesUsedToday);
-      console.log("albums", albums);
-      console.log("currentAlbum", currentAlbum);
 
       setAllVotesUsed(
         numberOfVotesAvailable <= votesUsedToday?.length ? true : false
