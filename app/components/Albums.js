@@ -16,8 +16,8 @@ function successfulDownvote() {
   return toast.success("Downvote Successful");
 }
 
-export default function Albums({ user, albumsData }) {
-  const [albums, setAlbums] = React.useState(albumsData);
+export default function Albums({ user }) {
+  const [albums, setAlbums] = React.useState([]);
   const [albumIndex, setAlbumIndex] = React.useState(0);
   const [currentAlbum, setCurrentAlbum] = React.useState(null);
   const [numberOfAlbums, setNumberOfAlbums] = React.useState(0);
@@ -37,8 +37,14 @@ export default function Albums({ user, albumsData }) {
 
       // console.log("allAlbums", allAlbums);
 
-      const activeAlbum = albums[albumIndex];
+      const { data: albumsData, error: albumsDataError } = await supabase
+        .from("profiles")
+        .select("current_album_set")
+        .eq("id", user.id);
+
+      const activeAlbum = albumsData[0]["current_album_set"][albumIndex];
       const activeAlbumId = activeAlbum.id;
+      console.log("activeAlbum", albumsData[0]["current_album_set"]);
 
       const { data: upvotes, error: upvotesError } = await supabase
         .from("votes")
@@ -59,7 +65,7 @@ export default function Albums({ user, albumsData }) {
 
       // return [allAlbums, activeAlbum, upvotes, downvotes, activeUserVotes];
 
-      return [upvotes, downvotes, activeUserVotes];
+      return [albumsData, upvotes, downvotes, activeUserVotes];
     },
     { refetchOnWindowFocus: false }
   );
@@ -68,14 +74,15 @@ export default function Albums({ user, albumsData }) {
   React.useEffect(() => {
     if (status === "loading") return;
     if (status === "success") {
-      // setAlbums(data[0]);
+      console.log(data);
+      setAlbums(data[0][0]["current_album_set"]);
       setNumberOfAlbums(albums.length);
       setCurrentAlbum(albums[albumIndex]);
-      setUpvotes(data[0].length);
-      setDownvotes(data[1].length);
+      setUpvotes(data[1]?.length || 0);
+      setDownvotes(data[2]?.length || 0);
       console.log(data);
 
-      const numberOfVotesAvailable = 3;
+      const numberOfVotesAvailable = 300;
       const votesUsedToday = data[2]?.filter(
         (vote) =>
           dayjs(new Date(vote.created_at)).format("YYYY/MM/DD") ===
@@ -83,6 +90,8 @@ export default function Albums({ user, albumsData }) {
       );
 
       console.log(votesUsedToday);
+      console.log("albums", albums);
+      console.log("currentAlbum", currentAlbum);
 
       setAllVotesUsed(
         numberOfVotesAvailable <= votesUsedToday?.length ? true : false
