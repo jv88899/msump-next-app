@@ -172,7 +172,7 @@ export default function Albums({ user }) {
                     <Album
                       album={currentAlbum}
                       upvotes={upvotes}
-                      downvotes={downvotes.count}
+                      downvotes={downvotes}
                       handleUpvote={handleUpvote}
                       handleDownvote={handleDownvote}
                     />
