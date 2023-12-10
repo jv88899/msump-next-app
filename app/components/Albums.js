@@ -71,8 +71,8 @@ export default function Albums({ user }) {
       setUpvotes(data[1]?.length || 0);
       setDownvotes(data[2]?.length || 0);
 
-      const numberOfVotesAvailable = 300;
-      const votesUsedToday = data[2]?.filter(
+      const numberOfVotesAvailable = 3;
+      const votesUsedToday = data[3]?.filter(
         (vote) =>
           dayjs(new Date(vote.created_at)).format("YYYY/MM/DD") ===
           dayjs().format("YYYY/MM/DD")

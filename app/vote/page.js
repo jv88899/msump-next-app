@@ -57,7 +57,6 @@ export default async function Vote() {
     return data;
   }
 
-  // 1: Get the user
   const { data: userData, error: userDataError } =
     await supabase.auth.getSession();
 
@@ -67,11 +66,13 @@ export default async function Vote() {
 
   const albumSetDate = await getAlbumSetDate(userData.session.user.id);
 
-  if (albumSetDate[0]["albums_set_date"] === null) {
+  if (
+    albumSetDate[0]["albums_set_date"] === null ||
+    albumSetDate[0]["albums_set_date"] !== dayjs().format("YYYY/MM/DD")
+  ) {
     createAlbumSet()
       .then((albumSet) => {
         updateAlbumSet(userData.session.user.id, albumSet);
-        return albumsData;
       })
       .then((data) => {
         return updateAlbumSetDate(
