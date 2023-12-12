@@ -14,7 +14,7 @@
 }
 
 .fixed-bottom {
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   bottom: 0;
   position: fixed;
   width: 100%;
