@@ -1,0 +1,21 @@
+.horizontal-scroll {
+  -ms-overflow-style: none;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.shift-left {
+  margin-left: -71.5px;
+  transform: translateX(-25px);
+}
+
+.fixed-bottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
